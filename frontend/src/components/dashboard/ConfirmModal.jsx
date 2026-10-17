@@ -1,0 +1,2 @@
+import { Modal } from '../ui/Modal'
+export function ConfirmModal({open,onClose,onConfirm,pending,label='Delete'}){return <Modal open={open} onClose={onClose}><h2>Confirm {label.toLowerCase()}</h2><p className="muted">This action cannot be undone.</p><div className="row"><button className="btn danger" disabled={pending} onClick={onConfirm}>{pending?'Working…':label}</button><button className="btn" onClick={onClose}>Cancel</button></div></Modal>}

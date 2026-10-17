@@ -1,0 +1,20 @@
+{
+  "info": { "name": "DevFolio API", "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json" },
+  "variable": [{"key":"baseUrl","value":"http://127.0.0.1:8000/api"},{"key":"access","value":""},{"key":"postSlug","value":""}],
+  "item": [
+    {"name":"Login","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\n  \"username\": \"demo-owner\",\n  \"password\": \"replace-me\"\n}"},"url":"{{baseUrl}}/auth/login/"}},
+    {"name":"Public profile","request":{"method":"GET","url":"{{baseUrl}}/profile/"}},
+    {"name":"Public skills","request":{"method":"GET","url":"{{baseUrl}}/skills/"}},
+    {"name":"Create skill (owner)","request":{"method":"POST","header":[{"key":"Authorization","value":"Bearer {{access}}"},{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\"name\":\"Replace me\",\"category\":\"TOOLS\",\"proficiency\":80}"},"url":"{{baseUrl}}/skills/"}},
+    {"name":"Public projects","request":{"method":"GET","url":"{{baseUrl}}/projects/"}},
+    {"name":"Public posts","request":{"method":"GET","url":"{{baseUrl}}/posts/"}},
+    {"name":"Like post","request":{"method":"POST","header":[{"key":"X-Visitor-Id","value":"{{$guid}}"}],"url":"{{baseUrl}}/posts/{{postSlug}}/like/"}},
+    {"name":"List comments","request":{"method":"GET","url":"{{baseUrl}}/posts/{{postSlug}}/comments/"}},
+    {"name":"Create comment","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\"name\":\"Replace me\",\"email\":\"you@example.com\",\"content\":\"A real comment goes here.\"}"},"url":"{{baseUrl}}/posts/{{postSlug}}/comments/"}},
+    {"name":"Public categories","request":{"method":"GET","url":"{{baseUrl}}/categories/"}},
+    {"name":"Public tags","request":{"method":"GET","url":"{{baseUrl}}/tags/"}},
+    {"name":"Contact","request":{"method":"POST","header":[{"key":"Content-Type","value":"application/json"}],"body":{"mode":"raw","raw":"{\"name\":\"Replace me\",\"email\":\"you@example.com\",\"subject\":\"Hello\",\"message\":\"A real message with enough detail.\"}"},"url":"{{baseUrl}}/contact/"}},
+    {"name":"Dashboard stats (owner)","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{access}}"}],"url":"{{baseUrl}}/dashboard/stats/"}},
+    {"name":"Moderate comments (owner)","request":{"method":"GET","header":[{"key":"Authorization","value":"Bearer {{access}}"}],"url":"{{baseUrl}}/comments/?is_approved=false"}}
+  ]
+}

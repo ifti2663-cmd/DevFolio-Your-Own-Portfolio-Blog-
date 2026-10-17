@@ -1,0 +1,1 @@
+export function PageHead({eyebrow,title,children}){return <div className="page-head"><div className="container"><div className="eyebrow">{eyebrow}</div><h1 className="title">{title}</h1>{children&&<p className="subhead">{children}</p>}</div></div>}

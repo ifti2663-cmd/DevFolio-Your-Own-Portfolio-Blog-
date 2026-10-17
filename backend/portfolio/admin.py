@@ -1,0 +1,25 @@
+from django.contrib import admin
+from .models import Category, Comment, ContactMessage, Education, Experience, Post, PostLike, PostView, Profile, Project, Skill, Tag
+
+
+@admin.register(Profile)
+class ProfileAdmin(admin.ModelAdmin): list_display = ("full_name", "headline", "is_available_for_hire"); search_fields = ("full_name", "email")
+@admin.register(Skill)
+class SkillAdmin(admin.ModelAdmin): list_display = ("name", "category", "proficiency", "is_featured"); list_filter = ("category", "is_featured"); search_fields = ("name",)
+@admin.register(Experience)
+class ExperienceAdmin(admin.ModelAdmin): list_display = ("role", "company", "is_current", "start_date"); list_filter = ("employment_type", "is_current"); search_fields = ("role", "company")
+@admin.register(Education)
+class EducationAdmin(admin.ModelAdmin): list_display = ("degree", "institution", "start_year"); search_fields = ("degree", "institution")
+@admin.register(Project)
+class ProjectAdmin(admin.ModelAdmin): list_display = ("title", "category", "is_featured", "completed_date"); list_filter = ("category", "is_featured"); search_fields = ("title", "summary")
+@admin.register(Post)
+class PostAdmin(admin.ModelAdmin): list_display = ("title", "status", "category", "published_at", "views_count"); list_filter = ("status", "category", "is_featured"); search_fields = ("title", "excerpt", "content")
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin): list_display = ("name", "slug"); search_fields = ("name",)
+@admin.register(Tag)
+class TagAdmin(admin.ModelAdmin): list_display = ("name", "slug"); search_fields = ("name",)
+@admin.register(Comment)
+class CommentAdmin(admin.ModelAdmin): list_display = ("name", "post", "is_approved", "created_at"); list_filter = ("is_approved",); search_fields = ("name", "email", "content")
+@admin.register(ContactMessage)
+class ContactAdmin(admin.ModelAdmin): list_display = ("name", "subject", "is_read", "created_at"); list_filter = ("is_read",); search_fields = ("name", "email", "subject")
+admin.site.register(PostLike); admin.site.register(PostView)

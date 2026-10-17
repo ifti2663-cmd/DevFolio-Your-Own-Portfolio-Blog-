@@ -1,0 +1,1 @@
+export const errorMessage = (error) => { const data=error?.response?.data; if(!data) return 'Something went wrong. Please try again.'; if(typeof data.detail==='string') return data.detail; const first=Object.values(data)[0]; return Array.isArray(first)?first[0]:'Something went wrong.' }

@@ -1,0 +1,12 @@
+import { useState } from 'react'
+import { useQuery } from '@tanstack/react-query'
+import { Link } from 'react-router-dom'
+import { ArrowUpRight, Search } from 'lucide-react'
+import { projectsApi } from '../api/endpoints/portfolio'
+import { useDebounce } from '../hooks/useDebounce'
+import { EmptyState, ErrorState, LoadingGrid } from '../components/ui/AppState'
+import { Pagination } from '../components/ui/Pagination'
+import { PageHead } from './PageHead'
+import './pages.css'
+import { useDocumentTitle } from '../hooks/useDocumentTitle'
+export function ProjectsPage(){useDocumentTitle('Projects');const [search,setSearch]=useState('');const [category,setCategory]=useState('');const [page,setPage]=useState(1);const term=useDebounce(search);const projects=useQuery({queryKey:['projects',{term,category,page}],queryFn:()=>projectsApi.list({search:term,category,ordering:'-completed_date',page})});return <><PageHead eyebrow="Work" title="Projects with a purpose.">A selection of products, interfaces, and APIs built to solve real problems.</PageHead><section className="section"><div className="container"><div className="filters"><label className="search"><Search size={17}/><input value={search} onChange={e=>{setSearch(e.target.value);setPage(1)}} placeholder="Search projects"/></label><select value={category} onChange={e=>{setCategory(e.target.value);setPage(1)}}><option value="">All categories</option>{['WEB','MOBILE','API','ML','OTHER'].map(c=><option key={c}>{c}</option>)}</select></div>{projects.isLoading?<LoadingGrid/>:projects.isError?<ErrorState error={projects.error} retry={projects.refetch}/>:projects.data?.results?.length?<><div className="grid">{projects.data.results.map(p=><article className="card project-card" key={p.slug}>{p.cover_image_url&&<img src={p.cover_image_url} alt={`Screenshot of ${p.title}`} loading="lazy"/>}<div><small>{p.category}</small><h2>{p.title}</h2><p>{p.summary}</p><div className="tag-list">{p.tech_stack_details?.map(t=><span key={t.id}>{t.name}</span>)}</div><Link className="text-link" to={`/projects/${p.slug}`}>View project <ArrowUpRight size={16}/></Link></div></article>)}</div><Pagination data={projects.data} page={page} onPage={setPage} pageSize={9}/></>:<EmptyState>No projects found{term?` for '${term}'`:''}.</EmptyState>}</div></section></>}

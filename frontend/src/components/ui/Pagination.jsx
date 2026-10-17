@@ -1,0 +1,1 @@
+export function Pagination({data,page,onPage,pageSize=6}){if(!data?.count||data.count<=pageSize)return null;return <div className="pagination"><button disabled={!data.previous} onClick={()=>onPage(page-1)}>Previous</button><button aria-current="page">{page}</button><button disabled={!data.next} onClick={()=>onPage(page+1)}>Next</button></div>}
